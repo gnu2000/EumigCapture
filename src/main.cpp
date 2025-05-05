@@ -11,7 +11,7 @@ void parseData();
 void trigPort();
 
 // Define pin connections
-const int trigPin = 1;
+const int trigPin = 2;
 const int dirPin = 5;
 const int stepPin = 3;
 const int enablePin = 4;
@@ -94,6 +94,7 @@ void setup() {
   pinMode(dirPin, OUTPUT);
   pinMode(enablePin, OUTPUT);
   pinMode(relayPin, OUTPUT);
+  pinMode(trigPin, OUTPUT);
  
   pinMode(lightPin, INPUT_PULLUP);
   pinMode(jogPin, INPUT_PULLUP);
@@ -137,6 +138,8 @@ void loop() {
   //if (buffer == "capture"){
   //  command = "capture";
   //}
+
+  trigPort();
 
   // Time for MOVEMENT!
     if(jog == LOW){
@@ -198,7 +201,7 @@ void trigPort() {
   state = digitalRead(sensorPin);
   if (state == HIGH){
     digitalWrite(trigPin, HIGH);
-  } else {
+  } else if (state == LOW){
     digitalWrite(trigPin, LOW);
   }
 }
