@@ -8,8 +8,10 @@ void jogging();
 void capture();
 void recvWithStartEndMarkers();
 void parseData();
+void trigPort();
 
 // Define pin connections
+const int trigPin = 1;
 const int dirPin = 5;
 const int stepPin = 3;
 const int enablePin = 4;
@@ -188,6 +190,16 @@ void jogging() {
     myStepper.setSpeed(1650);
     myStepper.runSpeed();
     jog = digitalRead(jogPin);
+    trigPort();
+  }
+}
+
+void trigPort() {
+  state = digitalRead(sensorPin);
+  if (state == HIGH){
+    digitalWrite(trigPin, HIGH);
+  } else {
+    digitalWrite(trigPin, LOW);
   }
 }
 
