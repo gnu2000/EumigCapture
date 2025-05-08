@@ -40,12 +40,14 @@ time.sleep(1)
 ser.write(command)
 print(f"Sent command: {capture}")
 
-while i <= frames:
+while line != "Done!":
   time.sleep(0.05)
   if ser.in_waiting > 0:
     line = ser.readline().decode('utf-8').rstrip()
   if line == prevline:
     line = ""
+  if line !="":
+    print(f"Received: {line}")
   if line == "trig":
     print(f"Getting frame {i}...")
     if filetype == "1":
@@ -54,6 +56,6 @@ while i <= frames:
       picam2.capture_file(f"frames/{capname}_{i : 07d}.jpg") # Gets a jpg
     i += 1
   prevline = line
-
-print(f"Sending stop command")
+i = i - 1
+print(f"Received stop command, {i} frames captured.")
 ser.write(b"c\n")
